@@ -5,10 +5,10 @@ function App() {
   return (
     <div className="App">
       <h1>Person Cards</h1>
-      <PersonCard firstName="John" lastName="Doe" age={30} hairColor="Brown" />
-      <PersonCard firstName="Jane" lastName="Smith" age={25} hairColor="Blonde" />
-      <PersonCard firstName="Michael" lastName="Johnson" age={40} hairColor="Black" />
-      <PersonCard firstName="Emily" lastName="Davis" age={35} hairColor="Red" />
+      <PersonCard firstName="Sami" lastName="Daraghmeh" age={18} hairColor="Brown" />
+      <PersonCard firstName="Omar" lastName="Rayyan" age={20} hairColor="Blonde" />
+      <PersonCard firstName="Jalal" lastName="Hemo" age={34} hairColor="Black" />
+      <PersonCard firstName="Ali" lastName="Yahya" age={21} hairColor="Red" />
     </div>
   );
 }

@@ -16,4 +16,4 @@ function PersonCard({ firstName, lastName, age, hairColor }) {
   );
 }
 
-export default PersonCard;
+export default PersonCard; 
