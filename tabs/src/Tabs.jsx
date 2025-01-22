@@ -14,7 +14,7 @@ const Tabs = ({ tabs }) => {
 
   return (
     <div>
-      <div>
+      <div style={{width:'900px'}}>
         {tabs.map((tab, index) => (
           <button key={index} onClick={() => setActiveTab(index)}>
             {tab.label}
