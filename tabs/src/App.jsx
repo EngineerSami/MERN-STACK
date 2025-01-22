@@ -2,20 +2,15 @@ import React from "react";
 import Tabs from "./Tabs";
 
 const App = () => {
-  const tabData = [
-    {
-      label: "Tab 1",
-      content: <h1>This is the content of Tab 1</h1>,
-    },
-    {
-      label: "Tab 2",
-      content: <h1>This is the content of Tab 2</h1>,
-    },
-    {
-      label: "Tab 3",
-      content: <h1>This is the content of Tab 3</h1>,
-    },
-  ];
+  const words = "This is the content of Tab";
+
+  const tabData = [];
+  for (let i = 1; i <= 3; i++) {
+    tabData.push({
+      label: `Tab ${i}`,
+      content: <h1>{`${words} ${i}`}</h1>,
+    });
+  }
 
   return (
     <div>
