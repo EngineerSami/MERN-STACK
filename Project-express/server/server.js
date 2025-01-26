@@ -24,14 +24,16 @@ app.delete('/api/users/:id', (req, res) => {
   res.json(users);
 });
 
+app.put('/api/users/:id', (req, res) => {
+  const { id } = req.params;
+  const { name, age } = req.body;
+  users = users.map(user => user.id === parseInt(id) ? { ...user, name, age } : user);
+  res.json(users);
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-app.put('/api/users/:id', (req, res) => {
-const { id } = req.params;
-const { name, age } = req.body;
-users = users.map(user => user.id === parseInt(id) ? { ...user, name, age } : user);
-  res.json(users);
-  
-});
+
