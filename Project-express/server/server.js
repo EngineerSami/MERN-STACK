@@ -29,14 +29,9 @@ app.listen(PORT, () => {
 });
 
 app.put('/api/users/:id', (req, res) => {
-  const { id } = req.params;
-  const updatedUser = req.body;
-
-  let userIndex = users.findIndex((user) => user.id === parseInt(id));
-  if (userIndex !== -1) {
-    users[userIndex] = { ...users[userIndex], ...updatedUser };
-    res.json(users);
-  } else {
-    res.status(404).send('User not found');
-  }
+const { id } = req.params;
+const { name, age } = req.body;
+users = users.map(user => user.id === parseInt(id) ? { ...user, name, age } : user);
+  res.json(users);
+  
 });
