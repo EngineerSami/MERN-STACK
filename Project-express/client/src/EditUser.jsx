@@ -41,15 +41,15 @@ const Styling = {
       <h2>Edit User</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>ID:</label> <br />
+          <label>ID:</label> <br/>
           <input type="text" name="id" value={editedUser.id} disabled />
         </div>
         <div>
-          <label>Name:</label> <br />
+          <label>Name:</label> <br/>
           <input type="text" name="name" value={editedUser.name} onChange={handleChange} style={{...Styling}} />
         </div>
         <div>
-          <label>Age:</label> <br />
+          <label>Age:</label> <br/>
           <input type="text" name="age" value={editedUser.age} onChange={handleChange} style={{...Styling}}/>
         </div>
         <button type="submit">Save</button>
