@@ -9,14 +9,13 @@ const ColorBoxForm = () => {
     setColor(e.target.value);
   };
 
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (color) {
-      setBoxes((prevBoxes) => [...prevBoxes, color]);
-      setColor("");
-    }
-  };
+const handleSubmit = (e) => {
+  e.preventDefault();
+  if (color) {
+    setBoxes([...boxes, color]);
+    setColor("");
+  }
+};
 
   return (
     <div>
