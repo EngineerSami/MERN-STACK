@@ -31,7 +31,29 @@ app.put('/api/users/:id', (req, res) => {
   res.json(users);
 });
 
+app.post('/api/users', (req, res) => {
+  const { name, age } = req.body;
 
+  if (!name || !age) {
+    return res.status(400).json({ error: 'Name and age are required.' });
+  }
+
+  if (isNaN(age)) {
+    return res.status(400).json({ error: 'Age must be a valid number.' });
+  }
+
+  const newId = users.length > 0 ? users[users.length - 1].id + 1 : 1;
+
+  const newUser = {
+    id: newId,
+    name,
+    age: parseInt(age), 
+  };
+
+  users.push(newUser);
+
+  res.status(201).json(newUser);
+});
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
