@@ -1,4 +1,3 @@
-// EditUser.js
 import React, { useState } from 'react';
 
 function EditUser({ user, onSave, onCancel }) {
@@ -14,47 +13,27 @@ function EditUser({ user, onSave, onCancel }) {
     onSave(editedUser);
   };
 
-const Styling = {
-  editFormInput: {
-    width: '100%',
-    padding: 'var(--input-padding)',
-    marginTop: '5px',
-    border: '1px solid var(--input-border-color)',
-    borderRadius: 'var(--border-radius)',
-    backgroundColor: 'var(--input-background-color)',
-    color: 'var(--input-text-color)',
-    fontSize: '1rem',
-    marginLift:'30px'
-  },
-  editFormInputFocus: {
-    outline: 'none',
-    borderColor: 'var(--primary-color)',
-    backgroundColor: '#eafaf1',
-  },
-  editFormInputDisabled: {
-    backgroundColor: '#f0f0f0',
-  },
-}
+
 
   return (
-    <div style={{ marginBottom: '20px' }}>
+    <div>
       <h2>Edit User</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>ID:</label> <br/>
-          <input type="text" name="id" value={editedUser.id} disabled />
+          <input type="text" name="id" value={editedUser.id} disabled style={{width:'600px'}}/>
         </div>
         <div>
           <label>Name:</label> <br/>
-          <input type="text" name="name" value={editedUser.name} onChange={handleChange} style={{...Styling}} />
+          <input type="text" name="name" value={editedUser.name} onChange={handleChange} style={{width:'600px'}}/>
         </div>
         <div>
           <label>Email:</label> <br/>
-          <input type="email" name="email" value={editedUser.email} onChange={handleChange} style={{...Styling}}/>
+          <input type="email" name="email" value={editedUser.email} onChange={handleChange} style={{width:'600px'}}/>
         </div>
         <div>
           <label>Age:</label> <br/>
-          <input type="text" name="age" value={editedUser.age} onChange={handleChange} style={{...Styling}}/>
+          <input type="text" name="age" value={editedUser.age} onChange={handleChange} style={{width:'600px'}}/>
         </div>
         <button type="submit">Save</button>
         <button type="button" onClick={onCancel}>Cancel</button>

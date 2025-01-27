@@ -1,68 +1,174 @@
+/* App.css */
+
+/* Global Styles */
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --primary-color: #007bff;
+  --input-padding: 12px;
+  --input-border-color: #ced4da;
+  --input-background-color: #f8f9fa;
+  --input-text-color: #343a40;
+  --border-radius: 4px;
+  --button-color: #343a40;
+  --button-hover-color: #56595c;
+  --error-color: #dc3545;
+  --background-color: #f4f6f9;
+  --table-header-color: #343a40;
+  --table-row-hover-color: #e9ecef;
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+/* Body Styling */
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: #212529;
+  line-height: 1.6;
+  margin-top: 150px;
+}
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.App {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-height: 600px;
+}
+
+h1, h2 {
+  color: var(--primary-color);
+  text-align: center;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 400px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background-color: var(--table-header-color);
+  color: white;
+}
+
+
+tbody tr:hover {
+  background-color: var(--table-row-hover-color);
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  color: var(--primary-color);
+  text-decoration: none;
+  cursor: pointer;
 }
+
 a:hover {
-  color: #535bf2;
+  text-decoration: underline;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+
+/* Form Styling */
+input {
+  padding: 10px;
+  margin-top: 8px;
+  border: 1px solid var(--input-border-color);
+  border-radius: var(--border-radius);
+  background-color: var(--input-background-color);
+  color: var(--input-text-color);
+  font-size: 1rem;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background-color: #eafaf1;
+}
+
+input[type="text"]:disabled,
+input[type="email"]:disabled,
+input[type="number"]:disabled {
+  outline: none;
+  background-color: #d1d1d1;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: var(--border-radius);
+  border: none;
+  color: #fff;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  background-color: var(--button-color);
+  transition: background-color 0.3s ease;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+button:hover {
+  background-color: var(--button-hover-color);
+}
+
+button:disabled {
+  background-color: #d6d8db;
+  cursor: not-allowed;
+}
+
+/* Error Message */
+p {
+  color: var(--error-color);
+  text-align: center;
+  margin-top: 15px;
+}
+
+/* Add and Edit User Styling */
+
+button[type="submit"] {
+  margin-top: 10px;
+  background-color: var(--button-color);
+}
+
+button[type="button"] {
+  margin-top: 15px;
+  background-color: #dc3545;
+  color: white;
+}
+
+button[type="button"]:hover {
+  background-color: #c82333;
+}
+
+/* Search and Sorting Controls */
+input[type="text"] {
+  padding: 8px;
+  font-size: 14px;
+  width: 300px;
+  margin-bottom: 15px;
+  border-radius: var(--border-radius);
+  border: 1px solid #ced4da;
+}
+
+button {
+  margin-left: 10px;
+}
+
+/* Add/Cancel User Controls */
+button[type="button"]:hover,
+button[type="submit"]:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
 }

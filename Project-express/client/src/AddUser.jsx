@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './App.css';
 
 function AddUser({ onUserAdded, onCancel }) {
   const [name, setName] = useState('');
@@ -30,28 +29,30 @@ function AddUser({ onUserAdded, onCancel }) {
       });
   };
 
+
+
   return (
-    <div className='main' style={{ maxWidth: '400px', margin: '0 auto' }}>
+    <div className='main'>
       <h2>Add User</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Name:</label> <br/>
-          <input type="text" value={name} onChange={(event) => setName(event.target.value)} />
+          <input type="text" value={name} onChange={(event) => setName(event.target.value)} style={{width:'400px'}}/>
         </div>
         <div>
           <label>Email:</label> <br/>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} style={{width:'400px'}}/>
         </div>
         <div>
           <label>Age:</label> <br/>
-          <input type="number" value={age} onChange={(e) => setAge(e.target.value)} />
+          <input type="number" value={age} onChange={(e) => setAge(e.target.value)} style={{width:'400px'}}/>
         </div> <br/>
         <div>
-          <button type="submit">Add User</button> <br/> <br />
+          <button type="submit" style={{width:'100px'}}>Add User</button> <br/> <br />
         </div>
       </form>
-      <button onClick={onCancel}>Cancel</button>
+      <button onClick={onCancel} style={{width:'100px'}}>Cancel</button>
     </div>
   );
 }

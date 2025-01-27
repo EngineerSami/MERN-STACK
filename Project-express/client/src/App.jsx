@@ -47,8 +47,22 @@ function App() {
       alert("You can't open Edit while Add User is active.");
       return;
     }
+
+    if (editUser) {
+      alert("You are already editing a user.");
+      return;
+    }
+  
     setEditUser(user);
-  };
+  
+setTimeout(() => {
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: 'smooth'
+  });
+}, 400);
+};
+  
 
   const handleSaveEdit = (updatedUser) => {
     axios
@@ -78,8 +92,21 @@ function App() {
       alert("You can't open Add User while Edit is active.");
       return;
     }
-    setShowAddUser(true);
+  
+    setShowAddUser((prevState) => {
+      const newState = !prevState;
+      if (newState) {
+        setTimeout(() => {
+          window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+          });
+        }, 400);
+      }
+      return newState;
+    });
   };
+  
 
   const handleCancelAddUser = () => {
     setShowAddUser(false);
@@ -120,6 +147,8 @@ function App() {
     setSortById(true); 
   };
 
+  
+
   return (
     <div className="App" style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
       <button onClick={handleAddUserClick} style={{ marginBottom: '20px' }}>
@@ -141,7 +170,7 @@ function App() {
       ) : error ? (
         <p style={{ color: 'red' }}>{error}</p>
       ) : (
-        <div>
+        <div style={{ maxHeight: '350px', overflowY: 'auto', border: '1px solid #ccc', borderRadius: '8px' }}>
           {filteredUsers.length === 0 ? (
             <p style={{ textAlign: 'center', color: 'red' }}>
               No users found.{' '}
@@ -182,15 +211,16 @@ function App() {
             </table>
           )}
 
-          <AnimatePresence>
-            {editUser && (
-              <motion.div key="edit-user" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.5 }} style={{ overflow: 'hidden', marginTop: '20px', padding: '10px' }}>
-                <EditUser user={editUser} onSave={handleSaveEdit} onCancel={handleCancelEdit} />
-              </motion.div>
-            )}
-          </AnimatePresence>
+
         </div>
       )}
+        <AnimatePresence>
+        {editUser && (
+          <motion.div key="edit-user" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.5 }} style={{ overflow: 'hidden', marginTop: '20px', padding: '10px' }}>
+            <EditUser user={editUser} onSave={handleSaveEdit} onCancel={handleCancelEdit} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {showAddUser && (
