@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { motion, AnimatePresence } from 'framer-motion'; // Import AnimatePresence
+import { motion, AnimatePresence } from 'framer-motion'; 
 import EditUser from './EditUser';
 import AddUser from './AddUser';
 
@@ -18,7 +18,7 @@ function App() {
       .get('http://localhost:2006/api/users')
       .then((response) => {
         setUsers(response.data);
-        setFilteredUsers(response.data); // Initially set filtered users to all users
+        setFilteredUsers(response.data);
       })
       .catch(() => {
         setError('Failed to load users. Please try again later.');
@@ -33,7 +33,7 @@ function App() {
       .delete(`http://localhost:2006/api/users/${id}`)
       .then((response) => {
         setUsers(response.data);
-        setFilteredUsers(response.data); // Update filtered users after delete
+        setFilteredUsers(response.data);
       })
       .catch(() => {
         setError('Failed to delete user. Please try again later.');
