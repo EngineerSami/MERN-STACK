@@ -6,16 +6,19 @@ import AddUser from './AddUser';
 
 function App() {
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editUser, setEditUser] = useState(null);
   const [showAddUser, setShowAddUser] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     axios
       .get('http://localhost:2006/api/users')
       .then((response) => {
         setUsers(response.data);
+        setFilteredUsers(response.data); // Initially set filtered users to all users
       })
       .catch(() => {
         setError('Failed to load users. Please try again later.');
@@ -30,6 +33,7 @@ function App() {
       .delete(`http://localhost:2006/api/users/${id}`)
       .then((response) => {
         setUsers(response.data);
+        setFilteredUsers(response.data); // Update filtered users after delete
       })
       .catch(() => {
         setError('Failed to delete user. Please try again later.');
@@ -49,6 +53,7 @@ function App() {
       .put(`http://localhost:2006/api/users/${updatedUser.id}`, updatedUser)
       .then((response) => {
         setUsers(response.data);
+        setFilteredUsers(response.data);
         setEditUser(null);
       })
       .catch(() => {
@@ -62,6 +67,7 @@ function App() {
 
   const handleUserAdded = (newUser) => {
     setUsers((prevUsers) => [...prevUsers, newUser]);
+    setFilteredUsers((prevUsers) => [...prevUsers, newUser]);
     setShowAddUser(false);
   };
 
@@ -77,27 +83,46 @@ function App() {
     setShowAddUser(false);
   };
 
+  const handleSearchChange = (event) => {
+    const query = event.target.value;
+  
+    const normalizedQuery = query.replace(/\s+/g, '').toLowerCase();
+  
+    setSearchQuery(query);
+  
+    const filtered = users.filter((user) => {
+      const normalizedUserName = user.name.replace(/\s+/g, '').toLowerCase();
+      return normalizedUserName.includes(normalizedQuery);
+    });
+  
+    setFilteredUsers(filtered);
+  };
+  
+
   return (
     <div className="App" style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
       <button onClick={handleAddUserClick} style={{ marginBottom: '20px' }}>
         Add User
       </button>
       <h1>User List</h1>
+
+      <input type="text" value={searchQuery} onChange={handleSearchChange} placeholder="Search by Name" style={{ marginBottom: '20px', padding: '8px', fontSize: '14px', width: '300px', }}/>
+
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
         <p style={{ color: 'red' }}>{error}</p>
       ) : (
         <div>
-          {users.length === 0 ? (
+          {filteredUsers.length === 0 ? (
             <p style={{ textAlign: 'center', color: 'red' }}>
-              The table is empty.{' '}
+              No users found.{' '}
               <a onClick={handleAddUserClick} href="#">
                 Add Users
               </a>
             </p>
           ) : (
-            <table className="mytable" border="1" style={{ margin: '0 auto', borderCollapse: 'collapse', width: '120%', textAlign: 'center', }} >
+            <table className="mytable" border="1" style={{ margin: '0 auto', borderCollapse: 'collapse', width: '120%', textAlign: 'center',}}>
               <thead>
                 <tr>
                   <th>ID</th>
@@ -108,7 +133,7 @@ function App() {
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
+                {filteredUsers.map((user) => (
                   <tr key={user.id}>
                     <td>{user.id}</td>
                     <td>{user.name}</td>
@@ -128,10 +153,11 @@ function App() {
               </tbody>
             </table>
           )}
+
           <AnimatePresence>
             {editUser && (
-              <motion.div key="edit-user" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.5 }} style={{ overflow: 'hidden', marginTop: '20px', padding: '10px', }} >
-                <EditUser user={editUser} onSave={handleSaveEdit} onCancel={handleCancelEdit} />
+              <motion.div key="edit-user" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.5 }} style={{ overflow: 'hidden', marginTop: '20px', padding: '10px' }}>
+              <EditUser user={editUser} onSave={handleSaveEdit} onCancel={handleCancelEdit} />
               </motion.div>
             )}
           </AnimatePresence>
@@ -139,10 +165,9 @@ function App() {
       )}
       <AnimatePresence>
         {showAddUser && (
-          <motion.div key="add-user" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.5 }} style={{ overflow: 'hidden', marginTop: '20px', padding: '10px' }}>
-              <AddUser onUserAdded={handleUserAdded} onCancel={handleCancelAddUser} />
+          <motion.div key="add-user" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.5 }} style={{ overflow: 'hidden', marginTop: '20px', padding: '10px' }} >
+            <AddUser onUserAdded={handleUserAdded} onCancel={handleCancelAddUser} />
           </motion.div>
-
         )}
       </AnimatePresence>
     </div>
