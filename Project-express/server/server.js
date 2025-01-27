@@ -1,18 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const PORT = 1306;
+const PORT = 2006;
 
 app.use(cors());
 app.use(express.json()); 
 
-let users = [
-  { id: 1, name: 'Sami Daraghmeh', age: '18' },
-  { id: 2, name: 'Jalal Hemo', age: '34' },
-  { id: 3, name: 'Ali Yahya', age: '20' },
-  { id: 4, name: 'Nasri Ladaa', age: '33' },
-  { id: 5, name: 'Omar Rayyan', age: '20' }
-];
+let users = [];
 
 app.get('/api/users', (req, res) => {
   res.json(users);
@@ -26,13 +20,13 @@ app.delete('/api/users/:id', (req, res) => {
 
 app.put('/api/users/:id', (req, res) => {
   const { id } = req.params;
-  const { name, age } = req.body;
-  users = users.map(user => user.id === parseInt(id) ? { ...user, name, age } : user);
+  const { name, age,email } = req.body;
+  users = users.map(user => user.id === parseInt(id) ? { ...user, name, age, email } : user);
   res.json(users);
 });
 
 app.post('/api/users', (req, res) => {
-  const { name, age } = req.body;
+  const { name, age, email } = req.body;
 
   if (!name || !age) {
     return res.status(400).json({ error: 'Name and age are required.' });
@@ -47,6 +41,7 @@ app.post('/api/users', (req, res) => {
   const newUser = {
     id: newId,
     name,
+    email,
     age: parseInt(age), 
   };
 

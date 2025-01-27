@@ -49,6 +49,10 @@ const Styling = {
           <input type="text" name="name" value={editedUser.name} onChange={handleChange} style={{...Styling}} />
         </div>
         <div>
+          <label>Email:</label> <br/>
+          <input type="email" name="email" value={editedUser.email} onChange={handleChange} style={{...Styling}}/>
+        </div>
+        <div>
           <label>Age:</label> <br/>
           <input type="text" name="age" value={editedUser.age} onChange={handleChange} style={{...Styling}}/>
         </div>

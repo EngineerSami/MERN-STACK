@@ -1,6 +1,6 @@
-// App.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { motion, AnimatePresence } from 'framer-motion'; // Import AnimatePresence
 import EditUser from './EditUser';
 import AddUser from './AddUser';
 
@@ -13,11 +13,11 @@ function App() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:1306/api/users')
+      .get('http://localhost:2006/api/users')
       .then((response) => {
         setUsers(response.data);
       })
-      .catch((error) => {
+      .catch(() => {
         setError('Failed to load users. Please try again later.');
       })
       .finally(() => {
@@ -27,11 +27,11 @@ function App() {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:1306/api/users/${id}`)
+      .delete(`http://localhost:2006/api/users/${id}`)
       .then((response) => {
         setUsers(response.data);
       })
-      .catch((error) => {
+      .catch(() => {
         setError('Failed to delete user. Please try again later.');
       });
   };
@@ -42,12 +42,12 @@ function App() {
 
   const handleSaveEdit = (updatedUser) => {
     axios
-      .put(`http://localhost:1306/api/users/${updatedUser.id}`, updatedUser)
+      .put(`http://localhost:2006/api/users/${updatedUser.id}`, updatedUser)
       .then((response) => {
         setUsers(response.data);
         setEditUser(null);
       })
-      .catch((error) => {
+      .catch(() => {
         setError('Failed to save user. Please try again later.');
       });
   };
@@ -58,15 +58,15 @@ function App() {
 
   const handleUserAdded = (newUser) => {
     setUsers((prevUsers) => [...prevUsers, newUser]);
-    setShowAddUser(false); 
+    setShowAddUser(false);
   };
 
   const handleAddUserClick = () => {
-    setShowAddUser(true); 
+    setShowAddUser(true);
   };
 
   const handleCancelAddUser = () => {
-    setShowAddUser(false); 
+    setShowAddUser(false);
   };
 
   return (
@@ -81,33 +81,52 @@ function App() {
             <p style={{ color: 'red' }}>{error}</p>
           ) : (
             <div>
-              <table border="1" style={{ margin: '0 auto', borderCollapse: 'collapse', width: '150%' }}>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {users.map((user) => (
-                    <tr key={user.id}>
-                      <td>{user.id}</td>
-                      <td>{user.name}</td>
-                      <td>{user.age}</td>
-                      <td>
-                        <a onClick={() => handleEdit(user)}>Edit</a> |{' '}
-                        <a onClick={() => handleDelete(user.id)}>Delete</a>
-                      </td>
+              {users.length === 0 ? (
+                <p style={{ textAlign: 'center', color: 'red' }}>
+                  The table is empty.{' '}
+                  <a onClick={handleAddUserClick} href="#">
+                    Add Users
+                  </a>
+                </p>
+              ) : (
+                <table className="mytable" border="1" style={{ margin: '0 auto', borderCollapse: 'collapse', width: '150%' }}>
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Age</th>
+                      <th>Action</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-
-              {editUser && (
-                <EditUser user={editUser} onSave={handleSaveEdit} onCancel={handleCancelEdit} />
+                  </thead>
+                  <tbody>
+                    {users.map((user) => (
+                      <tr key={user.id}>
+                        <td>{user.id}</td>
+                        <td>{user.name}</td>
+                        <td>{user.email}</td>
+                        <td>{user.age}</td>
+                        <td>
+                          <a onClick={() => handleEdit(user)} href="#">
+                            Edit
+                          </a>{' '}
+                          |{' '}
+                          <a onClick={() => handleDelete(user.id)} href="#">
+                            Delete
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               )}
+              <AnimatePresence>
+                {editUser && (
+                  <motion.div key="edit-user" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.5 }}style={{ overflow: 'hidden', marginTop: '20px', border: '1px solid #ccc', padding: '10px', borderRadius: '8px', }} >
+                    <EditUser user={editUser} onSave={handleSaveEdit} onCancel={handleCancelEdit} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           )}
         </>

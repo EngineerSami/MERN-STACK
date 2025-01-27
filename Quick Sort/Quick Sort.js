@@ -25,6 +25,6 @@ function quicksort(arr, low, high) {
     }
 }
 
-const arr = [6, 13, 3, 1, 136, 66, 6, 1306];
+const arr = [6, 13, 3, 1, 136, 66, 6, 2006];
 
 console.log(arr)
