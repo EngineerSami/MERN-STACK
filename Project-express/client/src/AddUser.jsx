@@ -36,19 +36,19 @@ function AddUser({ onUserAdded, onCancel }) {
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Name:</label>
+          <label>Name:</label> <br/>
           <input type="text" value={name} onChange={(event) => setName(event.target.value)} />
         </div>
         <div>
-          <label>Email:</label>
+          <label>Email:</label> <br/>
           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div>
-          <label>Age:</label>
+          <label>Age:</label> <br/>
           <input type="number" value={age} onChange={(e) => setAge(e.target.value)} />
-        </div>
+        </div> <br/>
         <div>
-          <button type="submit">Add User</button>
+          <button type="submit">Add User</button> <br/> <br />
         </div>
       </form>
       <button onClick={onCancel}>Cancel</button>

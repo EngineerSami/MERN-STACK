@@ -37,6 +37,10 @@ function App() {
   };
 
   const handleEdit = (user) => {
+    if (showAddUser) {
+      alert("You can't open Edit while Add User is active.");
+      return;
+    }
     setEditUser(user);
   };
 
@@ -62,6 +66,10 @@ function App() {
   };
 
   const handleAddUserClick = () => {
+    if (editUser) {
+      alert("You can't open Add User while Edit is active.");
+      return;
+    }
     setShowAddUser(true);
   };
 
@@ -71,68 +79,72 @@ function App() {
 
   return (
     <div className="App" style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      {!showAddUser ? (
-        <>
-          <button onClick={handleAddUserClick}>Add User</button>
-          <h1>User List</h1>
-          {loading ? (
-            <p>Loading...</p>
-          ) : error ? (
-            <p style={{ color: 'red' }}>{error}</p>
-          ) : (
-            <div>
-              {users.length === 0 ? (
-                <p style={{ textAlign: 'center', color: 'red' }}>
-                  The table is empty.{' '}
-                  <a onClick={handleAddUserClick} href="#">
-                    Add Users
-                  </a>
-                </p>
-              ) : (
-                <table className="mytable" border="1" style={{ margin: '0 auto', borderCollapse: 'collapse', width: '150%' }}>
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Age</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {users.map((user) => (
-                      <tr key={user.id}>
-                        <td>{user.id}</td>
-                        <td>{user.name}</td>
-                        <td>{user.email}</td>
-                        <td>{user.age}</td>
-                        <td>
-                          <a onClick={() => handleEdit(user)} href="#">
-                            Edit
-                          </a>{' '}
-                          |{' '}
-                          <a onClick={() => handleDelete(user.id)} href="#">
-                            Delete
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
-              <AnimatePresence>
-                {editUser && (
-                  <motion.div key="edit-user" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.5 }}style={{ overflow: 'hidden', marginTop: '20px', border: '1px solid #ccc', padding: '10px', borderRadius: '8px', }} >
-                    <EditUser user={editUser} onSave={handleSaveEdit} onCancel={handleCancelEdit} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          )}
-        </>
+      <button onClick={handleAddUserClick} style={{ marginBottom: '20px' }}>
+        Add User
+      </button>
+      <h1>User List</h1>
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p style={{ color: 'red' }}>{error}</p>
       ) : (
-        <AddUser onUserAdded={handleUserAdded} onCancel={handleCancelAddUser} />
+        <div>
+          {users.length === 0 ? (
+            <p style={{ textAlign: 'center', color: 'red' }}>
+              The table is empty.{' '}
+              <a onClick={handleAddUserClick} href="#">
+                Add Users
+              </a>
+            </p>
+          ) : (
+            <table className="mytable" border="1" style={{ margin: '0 auto', borderCollapse: 'collapse', width: '120%', textAlign: 'center', }} >
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Age</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.id}</td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.age}</td>
+                    <td>
+                      <a onClick={() => handleEdit(user)} href="#">
+                        Edit
+                      </a>{' '}
+                      |{' '}
+                      <a onClick={() => handleDelete(user.id)} href="#">
+                        Delete
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+          <AnimatePresence>
+            {editUser && (
+              <motion.div key="edit-user" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.5 }} style={{ overflow: 'hidden', marginTop: '20px', padding: '10px', }} >
+                <EditUser user={editUser} onSave={handleSaveEdit} onCancel={handleCancelEdit} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       )}
+      <AnimatePresence>
+        {showAddUser && (
+          <motion.div key="add-user" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.5 }} style={{ overflow: 'hidden', marginTop: '20px', padding: '10px' }}>
+              <AddUser onUserAdded={handleUserAdded} onCancel={handleCancelAddUser} />
+          </motion.div>
+
+        )}
+      </AnimatePresence>
     </div>
   );
 }
