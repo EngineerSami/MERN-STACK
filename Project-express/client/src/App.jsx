@@ -12,6 +12,8 @@ function App() {
   const [editUser, setEditUser] = useState(null);
   const [showAddUser, setShowAddUser] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortOrder, setSortOrder] = useState('acs'); 
+  const [sortById, setSortById] = useState(true); 
 
   useEffect(() => {
     axios
@@ -97,7 +99,26 @@ function App() {
   
     setFilteredUsers(filtered);
   };
-  
+
+  const handleSortByAge = () => {
+    const sortedUsers = [...filteredUsers].sort((a, b) => {
+      if (sortOrder === 'asc') {
+        return a.age - b.age; 
+      } else {
+        return b.age - a.age; 
+      }
+    });
+
+    setFilteredUsers(sortedUsers);
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    setSortById(false);
+  };
+
+  const handleSortById = () => {
+    const sortedUsers = [...filteredUsers].sort((a, b) => a.id - b.id);
+    setFilteredUsers(sortedUsers);
+    setSortById(true); 
+  };
 
   return (
     <div className="App" style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
@@ -107,6 +128,13 @@ function App() {
       <h1>User List</h1>
 
       <input type="text" value={searchQuery} onChange={handleSearchChange} placeholder="Search by Name" style={{ marginBottom: '20px', padding: '8px', fontSize: '14px', width: '300px', }}/>
+
+      <button onClick={handleSortByAge} style={{ marginBottom: '20px', marginLeft: '10px' }}>
+        Sort by Age ({sortOrder === 'asc' ? 'Min to Max' : 'Max to Min'})
+      </button>
+      <button onClick={handleSortById} style={{ marginBottom: '20px', marginLeft: '10px' }}>
+        Sort by ID
+      </button>
 
       {loading ? (
         <p>Loading...</p>
@@ -122,7 +150,7 @@ function App() {
               </a>
             </p>
           ) : (
-            <table className="mytable" border="1" style={{ margin: '0 auto', borderCollapse: 'collapse', width: '120%', textAlign: 'center',}}>
+            <table className="mytable" border="1" style={{ margin: '0 auto', borderCollapse: 'collapse', width: '100%', textAlign: 'center',}}>
               <thead>
                 <tr>
                   <th>ID</th>
@@ -157,12 +185,13 @@ function App() {
           <AnimatePresence>
             {editUser && (
               <motion.div key="edit-user" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.5 }} style={{ overflow: 'hidden', marginTop: '20px', padding: '10px' }}>
-              <EditUser user={editUser} onSave={handleSaveEdit} onCancel={handleCancelEdit} />
+                <EditUser user={editUser} onSave={handleSaveEdit} onCancel={handleCancelEdit} />
               </motion.div>
             )}
           </AnimatePresence>
         </div>
       )}
+
       <AnimatePresence>
         {showAddUser && (
           <motion.div key="add-user" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.5 }} style={{ overflow: 'hidden', marginTop: '20px', padding: '10px' }} >

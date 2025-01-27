@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "name": "Sami Daraghmeh",
+    "email": "sami.daraghmeh1306@gmail.com",
+    "age": 18
+  },
+  {
+    "id": 2,
+    "name": "Omar Rayyan",
+    "email": "omar@gmail.com",
+    "age": 20
+  },
+  {
+    "id": 3,
+    "name": "Loai Zidane",
+    "email": "loai@gmail.com",
+    "age": 20
+  },
+  {
+    "id": 4,
+    "name": "Ali Yahya",
+    "email": "ali@gmail.com",
+    "age": 21
+  },
+  {
+    "id": 5,
+    "name": "Anas Zughayyar",
+    "email": "anas@gmail.com",
+    "age": 31
+  },
+  {
+    "id": 6,
+    "name": "Yasser Alzoubi",
+    "email": "yasser@gmail.com",
+    "age": 33
+  },
+  {
+    "id": 7,
+    "name": "Jalal Hemo",
+    "email": "jalal.hemo@gmail.com",
+    "age": 34
+  },
+  {
+    "id": 8,
+    "name": "Mohammad AbuMuhk",
+    "email": "abumukh@gmail.com",
+    "age": 24
+  },
+  {
+    "id": 9,
+    "name": "Mohammad Al-Turk",
+    "email": "mo.turk@gmail.com",
+    "age": 24
+  },
+  {
+    "id": 10,
+    "name": "Shatha Bast",
+    "email": "shatha@axsos.academy",
+    "age": 28
+  },
+  {
+    "id": 11,
+    "name": "Nasri Ladaa",
+    "email": "nasri@axsos.academy",
+    "age": 33
+  },
+  {
+    "id": 12,
+    "name": "Dalia Sharqawi",
+    "email": "dalia@axsis.academy",
+    "age": 24
+  },
+  {
+    "id": 13,
+    "name": "Majd Hammad",
+    "email": "majd@gmail.com",
+    "age": 28
+  },
+  {
+    "id": 14,
+    "name": "Yahya Jarar",
+    "email": "yahya@axsos.academy",
+    "age": 18
+  },
+  {
+    "id": 15,
+    "name": "Majd Abusharar",
+    "email": "majd@axsos.academy",
+    "age": 26
+  }
+]
