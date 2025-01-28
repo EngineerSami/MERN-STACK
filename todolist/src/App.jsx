@@ -15,6 +15,7 @@ function App() {
     setTasks(tasks.filter((_, i) => i !== index));
   };
 
+
   const toggleCompletion = (index) => {
     const updatedTasks = tasks.map((task, i) => 
       i === index ? { ...task, completed: !task.completed } : task

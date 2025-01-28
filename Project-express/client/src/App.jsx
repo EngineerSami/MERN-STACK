@@ -116,9 +116,8 @@ setTimeout(() => {
     const query = event.target.value;
   
     const normalizedQuery = query.replace(/\s+/g, '').toLowerCase();
-  
+    
     setSearchQuery(query);
-  
     const filtered = users.filter((user) => {
       const normalizedUserName = user.name.replace(/\s+/g, '').toLowerCase();
       return normalizedUserName.includes(normalizedQuery);
