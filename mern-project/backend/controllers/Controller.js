@@ -1,4 +1,4 @@
-const User = require('../models/Model');  // Assuming you have a User model
+const User = require('../models/Model');  // Ensure the path is correct
 
 // Controller function to get all users
 const getAllUsers = (req, res) => {
@@ -10,4 +10,4 @@ const getAllUsers = (req, res) => {
         });
 };
 
-module.exports = { getAllUsers };
+module.exports = { getAllUsers };  // Export as an object

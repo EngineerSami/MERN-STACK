@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const { getAllUsers } = require('../controllers/Controller'); // Ensure this path is correct
 
-// Import your controller functions
-const { getAllUsers } = require('../controllers/Controller');
+// Define your routes
+router.get('/api/users', getAllUsers);
 
-// Define your routes and make sure they are correctly linked to handler functions
-router.get('/', getAllUsers);  // Ensure 'getAllUsers' is defined properly
-
-module.exports = router;
+// Export the router
+module.exports = router; // Export the router, not a function

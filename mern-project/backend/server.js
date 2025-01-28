@@ -1,23 +1,23 @@
-const express = require('express');
-const cors = require('cors');
 require('dotenv').config();
-const connectDB = require('./config/mongoose.config');  // Import the DB connection function
+require('./config/mongoose.config');  // Ensure the path is correct
 
+const express = require('express');
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
+const cors = require('cors');
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json(), express.urlencoded({ extended: true }));
 
-// Connect to the database
-connectDB();
+const userRoutes = require('./routes/Routes'); // Ensure this path is correct
 
-// Routes
-const userRoutes = require('./routes/Routes');
-app.use('/api/users', userRoutes);
+// Use the router
+app.use(userRoutes); // Use app.use() instead of userRoutes(app)
 
-// Start the server
+
+
+// Start server
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+    console.log(`Listening at Port ${port}`);
 });
