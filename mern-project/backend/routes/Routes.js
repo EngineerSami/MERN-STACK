@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { getAllUsers } = require('../controllers/Controller'); // Ensure this path is correct
+const { getAllUsers, addUser, deleteUser , updateUser } = require('../controllers/Controller');
 
-// Define your routes
+// Routes
 router.get('/api/users', getAllUsers);
+router.post('/api/users', addUser);
+router.delete('/api/users/:id', deleteUser); 
+router.put('/api/users/:id', updateUser);
 
-// Export the router
-module.exports = router; // Export the router, not a function
+module.exports = router;
