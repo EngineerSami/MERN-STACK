@@ -68,7 +68,7 @@ form div {
   margin-bottom: 15px;
 }
 
-input[type="text"] {
+input {
   width: 100%;
   padding: 10px;
   border: 1px solid #333;
@@ -79,7 +79,7 @@ input[type="text"] {
   color: #e0e0e0;
 }
 
-input[type="text"]::placeholder {
+input::placeholder {
   color: #888;
 }
 

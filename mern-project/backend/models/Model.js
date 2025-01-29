@@ -16,6 +16,12 @@ const UserSchema = new mongoose.Schema(
       maxlength: [20, 'Last name cannot exceed 20 characters.'],
       trim: true,
     },
+    age: {
+      type: Number,
+      required: [true, 'Age is required.'],
+      min: [18, 'Age needs to be older than 18.'],
+      max: [70, 'Age needs to be younger than 70.'],
+    },
   },
   { timestamps: true }
 );

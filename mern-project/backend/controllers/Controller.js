@@ -10,9 +10,9 @@ const getAllUsers = (req, res) => {
 };
 
 const addUser = (req, res) => {
-  const { firstName, lastName } = req.body;
+  const { firstName, lastName, age } = req.body;
 
-  User.create({ firstName, lastName })
+  User.create({ firstName, lastName, age })
     .then((newUser) => res.status(201).json(newUser))
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -27,14 +27,10 @@ const addUser = (req, res) => {
 // Update user
 const updateUser = (req, res) => {
   const { id } = req.params;
-  const { firstName, lastName } = req.body;
+  const { firstName, lastName, age } = req.body;
 
-  // Validation for updated fields
-  if (!firstName || !lastName) {
-    return res.status(400).json({ message: 'First name and last name are required.' });
-  }
-
-  User.findByIdAndUpdate(id, { firstName, lastName }, { new: true, runValidators: true })
+  // We rely on Mongoose validation instead of manually checking for fields
+  User.findByIdAndUpdate(id, { firstName, lastName, age }, { new: true, runValidators: true })
     .then((updatedUser) => {
       if (!updatedUser) {
         return res.status(404).json({ message: 'User not found' });
@@ -42,6 +38,11 @@ const updateUser = (req, res) => {
       res.json(updatedUser);
     })
     .catch((err) => {
+      // Handle Mongoose validation errors
+      if (err.name === 'ValidationError') {
+        const errors = Object.values(err.errors).map((e) => e.message);
+        return res.status(400).json({ message: 'Validation Error', errors });
+      }
       console.error('Error updating user:', err);
       res.status(500).json({ message: 'Server Error', error: err.message || err });
     });
