@@ -24,16 +24,14 @@ const App = () => {
     setLoading(false);
   };
 
-  // Pagination logic
   const lastIndex = currentPage * itemsPerPage;
   const firstIndex = lastIndex - itemsPerPage;
   const currentPokemon = pokemonList.slice(firstIndex, lastIndex);
   const totalPages = Math.ceil(pokemonList.length / itemsPerPage);
 
-  // Function to change page and scroll to the top
   const changePage = (newPage) => {
     setCurrentPage(newPage);
-    window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to top smoothly
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -68,14 +66,20 @@ const App = () => {
             </tbody>
           </table>
 
-          {/* Pagination Controls */}
           <div style={{ marginTop: "20px" }}>
+          <button 
+              onClick={() => changePage(1)} 
+              disabled={currentPage === 1} 
+              style={{ padding: "10px", margin: "5px", cursor: "pointer" }}
+            >
+              {"<<"} First page
+            </button>
             <button 
               onClick={() => changePage(currentPage - 1)} 
               disabled={currentPage === 1} 
               style={{ padding: "10px", margin: "5px", cursor: "pointer" }}
             >
-              Previous
+              {"<"} Previous
             </button>
             <span> Page {currentPage} of {totalPages} </span>
             <button 
@@ -83,7 +87,15 @@ const App = () => {
               disabled={currentPage === totalPages} 
               style={{ padding: "10px", margin: "5px", cursor: "pointer" }}
             >
-              Next
+              Next {">"}
+            </button>
+
+            <button 
+              onClick={() => changePage(currentPage + totalPages - currentPage)} 
+              disabled={currentPage === totalPages} 
+              style={{ padding: "10px", margin: "5px", cursor: "pointer" }}
+            >
+              Last Page {">>"}
             </button>
           </div>
         </>
