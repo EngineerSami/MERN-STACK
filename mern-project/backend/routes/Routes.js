@@ -6,6 +6,8 @@ const { getAllUsers, addUser, deleteUser , updateUser } = require('../controller
 router.get('/api/users', getAllUsers);
 router.post('/api/users', addUser);
 router.delete('/api/users/:id', deleteUser); 
+router.get('/api/users/:id', updateUser);
 router.put('/api/users/:id', updateUser);
+
 
 module.exports = router;
