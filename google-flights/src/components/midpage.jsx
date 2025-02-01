@@ -1,25 +1,54 @@
-import React, { useState } from 'react';
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import "../styles/midpage.css";
 
 const MidPage = () => {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [tripType, setTripType] = useState("Round trip");
-  const [passengers, setPassengers] = useState(1);
-  const [classType, setClassType] = useState("Economy");
   const [departureDate, setDepartureDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [fromSuggestions, setFromSuggestions] = useState([]);
+  const [toSuggestions, setToSuggestions] = useState([]);
 
-  // Get today's date in YYYY-MM-DD format
   const today = new Date().toISOString().split("T")[0];
 
-  const handleDepartureChange = (e) => {
-    setDepartureDate(e.target.value);
-    // Ensure return date is not before departure date
-    if (returnDate && e.target.value > returnDate) {
-      setReturnDate(e.target.value);
+  // Function to fetch airport suggestions
+  const fetchAirportSuggestions = async (query, setSuggestions) => {
+    if (!query) {
+      setSuggestions([]);
+      return;
+    }
+
+    try {
+      const response = await axios.get(
+        "https://sky-scrapper.p.rapidapi.com/api/v1/flights/searchAirport",
+        {
+          params: { query, locale: "en-US" },
+          headers: {
+            "x-rapidapi-host": "sky-scrapper.p.rapidapi.com",
+            "x-rapidapi-key": "3ee49d0a1fmsha22a197fb2336d4p1dca55jsn038e9c46cbbd", // Replace with your API key
+          },
+        }
+      );
+      setSuggestions(response.data.data || []);
+    } catch (error) {
+      console.error("Error fetching airport suggestions:", error);
     }
   };
+
+  // Handle input change with delay (debouncing)
+  useEffect(() => {
+    const timer = setTimeout(() => fetchAirportSuggestions(from, setFromSuggestions), 500);
+    return () => clearTimeout(timer);
+  }, [from]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => fetchAirportSuggestions(to, setToSuggestions), 500);
+    return () => clearTimeout(timer);
+  }, [to]);
 
   return (
     <>
@@ -29,47 +58,33 @@ const MidPage = () => {
           src="https://www.gstatic.com/travel-frontend/animation/hero/flights_nc_dark_theme_4.svg"
           alt="Background"
         />
-        <div className="title">Flights</div>
+        <div className="titlee">Flights</div>
       </div>
 
       <div className="search-container" onClick={() => setOpenDropdown(null)}>
         <div style={{ display: "flex" }}>
+          {/* Trip Type Dropdown */}
           <div className="dropdown">
-            <button onClick={(e) => { e.stopPropagation(); setOpenDropdown(openDropdown === "trip" ? null : "trip"); }}>
-              <i className="fas fa-exchange-alt"></i> {tripType} <i className="fas fa-caret-down"></i>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpenDropdown(openDropdown === "trip" ? null : "trip");
+              }}
+            >
+              <i className="fas fa-exchange-alt"></i> {tripType}{" "}
+              <i className="fas fa-caret-down"></i>
             </button>
             {openDropdown === "trip" && (
               <div className="dropdown-content">
                 {["Round trip", "One way", "Multi-city"].map((type) => (
-                  <button key={type} onClick={() => { setTripType(type); setOpenDropdown(null); }}>
-                    {type}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div className="dropdown">
-            <button onClick={(e) => { e.stopPropagation(); setOpenDropdown(openDropdown === "passengers" ? null : "passengers"); }}>
-              <i className="fas fa-user"></i> {passengers} <i className="fas fa-caret-down"></i>
-            </button>
-            {openDropdown === "passengers" && (
-              <div className="dropdown-content" style={{ display: "flex", gap: "30px" }}>
-                <button onClick={() => setPassengers((prev) => Math.max(1, prev - 1))} style={{ width: "50px" }}>-</button>
-                <p>{passengers}</p>
-                <button onClick={() => setPassengers((prev) => prev + 1)} style={{ width: "50px" }}>+</button>
-              </div>
-            )}
-          </div>
-
-          <div className="dropdown">
-            <button onClick={(e) => { e.stopPropagation(); setOpenDropdown(openDropdown === "class" ? null : "class"); }}>
-              {classType} <i className="fas fa-caret-down"></i>
-            </button>
-            {openDropdown === "class" && (
-              <div className="dropdown-content">
-                {["Economy", "Premium Economy", "Business", "First Class"].map((type) => (
-                  <button key={type} onClick={() => { setClassType(type); setOpenDropdown(null); }}>
+                  <button
+                    key={type}
+                    onClick={() => {
+                      setTripType(type);
+                      setOpenDropdown(null);
+                      if (type === "One way") setReturnDate("");
+                    }}
+                  >
                     {type}
                   </button>
                 ))}
@@ -78,15 +93,58 @@ const MidPage = () => {
           </div>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        {/* Search Inputs */}
+        <div className="search-options">
           <div className="search-option">
             <i className="fas fa-map-marker-alt"></i>
-            <input type="text" placeholder="Where from?" />
+            <input
+              type="text"
+              placeholder="Where from?"
+              value={from}
+              onChange={(e) => setFrom(e.target.value)}
+            />
+            {/* Suggestions Dropdown */}
+            {fromSuggestions.length > 0 && (
+              <ul className="suggestions">
+                {fromSuggestions.map((airport) => (
+                  <li
+                    key={airport.entityId}
+                    onClick={() => {
+                      setFrom(airport.presentation.title);
+                      setFromSuggestions([]);
+                    }}
+                  >
+                    {airport.presentation.title} ({airport.skyId})
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <div className="search-option">
             <i className="fas fa-map-marker-alt"></i>
-            <input type="text" placeholder="Where to?" />
+            <input
+              type="text"
+              placeholder="Where to?"
+              value={to}
+              onChange={(e) => setTo(e.target.value)}
+            />
+            {/* Suggestions Dropdown */}
+            {toSuggestions.length > 0 && (
+              <ul className="suggestions">
+                {toSuggestions.map((airport) => (
+                  <li
+                    key={airport.entityId}
+                    onClick={() => {
+                      setTo(airport.presentation.title);
+                      setToSuggestions([]);
+                    }}
+                  >
+                    {airport.presentation.title} ({airport.skyId})
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <div className="search-option">
@@ -94,21 +152,22 @@ const MidPage = () => {
             <input
               type="date"
               value={departureDate}
-              onChange={handleDepartureChange}
-              min={today} 
+              onChange={(e) => setDepartureDate(e.target.value)}
+              min={today}
             />
           </div>
 
-          <div className="search-option">
-            <i className="fas fa-calendar-alt"></i>
-            <input
-              type="date"
-              value={returnDate}
-              onChange={(e) => setReturnDate(e.target.value)}
-              min={departureDate || today} 
-              disabled={tripType === "One way"}
-            />
-          </div>
+          {tripType !== "One way" && (
+            <div className="search-option">
+              <i className="fas fa-calendar-alt"></i>
+              <input
+                type="date"
+                value={returnDate}
+                onChange={(e) => setReturnDate(e.target.value)}
+                min={departureDate || today}
+              />
+            </div>
+          )}
         </div>
       </div>
 

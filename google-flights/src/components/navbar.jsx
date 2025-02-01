@@ -16,6 +16,7 @@ function NavBar() {
         <a href="#"><Hotel size={20} /> Hotels</a>
         <a href="#"><Home size={20} /> Holiday rentals</a>
       </div>
+      <div style={{display:"flex" , marginRight:"20px"}}>
       <div className="sun-icon">
         <Sun size={24} />
       </div>
@@ -24,6 +25,7 @@ function NavBar() {
       </div>
       <div className="user-icon">
         <UserCircle size={24} />
+      </div>
       </div>
       
     </div>

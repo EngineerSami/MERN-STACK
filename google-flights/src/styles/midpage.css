@@ -4,12 +4,12 @@
 
 .background-image {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1250px;
     margin-top: 52px;
 }
 
-.title {
-    font-size: 50px;
+.titlee {
+    font-size: 55px;
     margin-top: -4%;
     color: white;
 }
@@ -21,7 +21,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    width: 50%;
+    width: 52%;
     margin: 0 auto;
     margin-top: 30px;
     flex-direction: column; 
@@ -34,16 +34,17 @@
     border-radius: 5px;
     flex: 1;
     margin-top: -20px;
+    position: relative; /* Ensure the suggestions are positioned relative to this div */
 }
 
 .search-container .dropdown {
-    position: relative;
     display: inline-block;
     width: 17%; 
+    background-color: #20212400;
 }
 
 .search-container > div i {
-    color: #888;
+    color: #888888;
 }
 
 .search-container > div input {
@@ -118,6 +119,7 @@
     border-radius: 10px;
     padding: 15px;
     font-size: 20px;
+    margin-left: 15px;
 }
 
 
@@ -134,6 +136,9 @@
     gap: 5px;
     margin: 20px auto;
     margin-top: -20px;
+    max-width: 120px;
+    font-weight: bold;
+    font-size: 14px;
 }
 :root{
     background-color: #202124;
@@ -209,4 +214,47 @@
         width: 100%;
         font-size: 16px;
     }
+}
+.suggestions {
+    position: absolute;
+    top: 100%; /* Make sure the suggestions appear directly below the input */
+    left: 0;
+    background-color: #36373a;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    list-style: none;
+    padding: 10px 0;
+    margin: 5px 0 0;
+    width: 100%; /* Adjust width to match the input */
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.suggestions li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+    color: #ffffff;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.suggestions li:hover {
+    background-color: #5b5b5b;
+}
+
+.suggestions::-webkit-scrollbar {
+    width: 6px;
+}
+
+.suggestions::-webkit-scrollbar-thumb {
+    background-color: #8ab4f8;
+    border-radius: 5px;
+}
+
+.suggestions::-webkit-scrollbar-track {
+    background: transparent;
 }

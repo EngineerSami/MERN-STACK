@@ -9,7 +9,9 @@ body {
   .footer {
     text-align: center;
     padding: 20px;
-    margin-top: 70px;
+    margin-top: 20px;
+    margin: 0 auto;
+    max-width: 1000px;
   }
   
   .footer .options {
@@ -38,7 +40,6 @@ body {
   
   .footer .info {
     margin-bottom: 20px;
-    width: 60%;
     margin: 20px auto;
   }
   

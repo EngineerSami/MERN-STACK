@@ -1,8 +1,11 @@
-import { useState } from 'react'
+import React,{ useState } from 'react'
 import NavBar from './components/navbar'
 import MidPage from './components/midpage'
 import FAQ from './components/faq'
 import Footer from './components/footer'
+import PopularTrips from './components/Popular-trips'
+import SearchFlights from './components/searchFlights'
+import MapPart from './components/mapPart'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -11,7 +14,10 @@ function App() {
     <>
       <NavBar />
       <MidPage />
+      <PopularTrips />
+      <MapPart />
       <FAQ />
+      <SearchFlights />
       <Footer />
     </>
   )
