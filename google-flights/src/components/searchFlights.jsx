@@ -71,7 +71,6 @@ function SearchFlights() {
           </div>
         </div>
 
-        {/* Links based on active tab */}
         <div className="links">
           {flightsData[activeTab].map((flight, index) => (
             <div key={index}>

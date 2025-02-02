@@ -15,7 +15,6 @@ const MidPage = () => {
 
   const today = new Date().toISOString().split("T")[0];
 
-  // Function to fetch airport suggestions
   const fetchAirportSuggestions = async (query, setSuggestions) => {
     if (!query) {
       setSuggestions([]);
@@ -29,7 +28,7 @@ const MidPage = () => {
           params: { query, locale: "en-US" },
           headers: {
             "x-rapidapi-host": "sky-scrapper.p.rapidapi.com",
-            "x-rapidapi-key": "3ee49d0a1fmsha22a197fb2336d4p1dca55jsn038e9c46cbbd", // Replace with your API key
+            "x-rapidapi-key": "a093c3b82emsh97113265de0a8e4p1f5a1ajsnb8a7ac9f7f1b",
           },
         }
       );
@@ -39,14 +38,13 @@ const MidPage = () => {
     }
   };
 
-  // Handle input change with delay (debouncing)
   useEffect(() => {
-    const timer = setTimeout(() => fetchAirportSuggestions(from, setFromSuggestions), 500);
+    const timer = setTimeout(() => fetchAirportSuggestions(from, setFromSuggestions), 0);
     return () => clearTimeout(timer);
   }, [from]);
 
   useEffect(() => {
-    const timer = setTimeout(() => fetchAirportSuggestions(to, setToSuggestions), 500);
+    const timer = setTimeout(() => fetchAirportSuggestions(to, setToSuggestions), 0);
     return () => clearTimeout(timer);
   }, [to]);
 
@@ -63,7 +61,6 @@ const MidPage = () => {
 
       <div className="search-container" onClick={() => setOpenDropdown(null)}>
         <div style={{ display: "flex" }}>
-          {/* Trip Type Dropdown */}
           <div className="dropdown">
             <button
               onClick={(e) => {
@@ -93,7 +90,6 @@ const MidPage = () => {
           </div>
         </div>
 
-        {/* Search Inputs */}
         <div className="search-options">
           <div className="search-option">
             <i className="fas fa-map-marker-alt"></i>
@@ -103,7 +99,6 @@ const MidPage = () => {
               value={from}
               onChange={(e) => setFrom(e.target.value)}
             />
-            {/* Suggestions Dropdown */}
             {fromSuggestions.length > 0 && (
               <ul className="suggestions">
                 {fromSuggestions.map((airport) => (
@@ -129,7 +124,6 @@ const MidPage = () => {
               value={to}
               onChange={(e) => setTo(e.target.value)}
             />
-            {/* Suggestions Dropdown */}
             {toSuggestions.length > 0 && (
               <ul className="suggestions">
                 {toSuggestions.map((airport) => (
