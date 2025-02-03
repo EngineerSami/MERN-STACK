@@ -13,7 +13,7 @@ function MapPart() {
             method: "GET",
             headers: {
               "x-rapidapi-host": "sky-scrapper.p.rapidapi.com",
-              "x-rapidapi-key": "3ee49d0a1fmsha22a197fb2336d4p1dca55jsn038e9c46cbbd",
+              "x-rapidapi-key": "95b193bd28msh6971b2a7b2a67fcp103c30jsn3f8defe1cbc5",
             },
           }
         );

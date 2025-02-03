@@ -28,7 +28,7 @@ const MidPage = () => {
           params: { query, locale: "en-US" },
           headers: {
             "x-rapidapi-host": "sky-scrapper.p.rapidapi.com",
-            "x-rapidapi-key": "a093c3b82emsh97113265de0a8e4p1f5a1ajsnb8a7ac9f7f1b",
+            "x-rapidapi-key": "95b193bd28msh6971b2a7b2a67fcp103c30jsn3f8defe1cbc5",
           },
         }
       );
