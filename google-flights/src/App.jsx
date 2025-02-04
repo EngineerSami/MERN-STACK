@@ -9,16 +9,24 @@ import MapPart from './components/mapPart'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [result, setResult] = useState("Loading...")
+  const [currency, setCurrency] = useState("Loading...")
+  const newResult = (res) => {
+    setResult(res);
+  }
+  const newCurrency = (res) => {
+    setCurrency(res);
+  }
 
   return (
     <>
       <NavBar />
       <MidPage />
-      <PopularTrips />
-      <MapPart />
-      <FAQ />
-      <SearchFlights />
-      <Footer />
+      <PopularTrips result={result} currency={currency} />
+      <MapPart result={result} />
+      <FAQ result={result} />
+      <SearchFlights onNewResult={newResult} />
+      <Footer onCurrency={newCurrency} />
     </>
   )
 }

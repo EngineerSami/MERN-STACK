@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../styles/mapPart.css";
 
-function MapPart() {
+function MapPart(props) {
   const [nearbyAirports, setNearbyAirports] = useState([]);
 
   useEffect(() => {
@@ -32,12 +32,13 @@ function MapPart() {
     fetchNearbyAirports();
   }, []);
 
+  
+
   return (
     <div className="parent">
-      {/* Map Section */}
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="map-container">
-          <h1>Find flights from Tel Aviv-Yafo to anywhere</h1>
+          <h1>Find flights from {props.result} to anywhere</h1>
           <div className="image-container">
             <img
               alt="World map with flight destinations marked"
@@ -48,9 +49,8 @@ function MapPart() {
         </div>
       </div>
 
-      {/* Airlines & Airports Section */}
       <div className="Big">
-        <h4>Popular airlines with direct flights from Tel Aviv-Yafo</h4>
+        <h4>Popular airlines with direct flights from {props.result}</h4>
         <div className="grid-container">
           {[
             {
@@ -88,7 +88,7 @@ function MapPart() {
                 />
                 <div>
                   <p style={{ marginLeft: "12px" }}>
-                    {airline.name} <br /> Fly from Tel Aviv-Yafo (TLV)
+                    {airline.name} <br /> Fly from {props.result} (TLV)
                   </p>
                 </div>
               </div>
@@ -99,7 +99,7 @@ function MapPart() {
           ))}
         </div>
 
-        <h4>Popular airports near Tel Aviv-Yafo</h4>
+        <h4>Popular airports near {props.result}</h4>
         <div className="grid-container">
           {nearbyAirports.slice(0, 4).map((airport, index) => (
             <div className="airport" key={index}>
